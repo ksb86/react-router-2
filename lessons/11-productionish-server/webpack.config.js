@@ -1,14 +1,26 @@
+var webpack = require('webpack');
+
 module.exports = {
-  entry: './index.js',
+    entry: './index.js',
 
-  output: {
-    filename: 'bundle.js',
-    publicPath: '/'
-  },
+    output: {
+        filename: 'bundle.js',
+        publicPath: '/',
+        path: 'public/'
+    },
 
-  module: {
-    loaders: [
-      { test: /\.js$/, exclude: /node_modules/, loader: 'babel-loader?presets[]=es2015&presets[]=react' }
-    ]
-  }
+    module: {
+        loaders: [
+            {
+                test: /\.js$/,
+                exclude: /node_modules/,
+                loader: 'babel-loader?presets[]=es2015&presets[]=react'
+            }
+        ]
+    },
+    pluguns: process.env.NODE_ENG === 'production' ? [
+        new webpack.optimize.DedupePlugin(),
+        new webpack.optimize.OccurrenceOrderPlugin(),
+        new webpack.optimize.UglifyJsPlugin()
+    ] : []
 }
